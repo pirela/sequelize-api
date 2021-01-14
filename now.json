@@ -1,0 +1,26 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "src/index.js", "use": "@now/node@canary" }
+    ],
+    "routes": [{
+        "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
+        },
+        "src": "/.*",
+        "dest": "src/index.js"
+    }],
+    "env": {
+      "NODE_ENV": "PRODUCTION",
+      "PORT": "4000",
+      "SECRET_API": "secret",
+      "DB_NAME": "dbName",
+      "DB_USERNAME": "user",
+      "DB_PASSWORD": "clave",
+      "DB_HOST": "000.000.00.00"
+    }
+  }
+
+
