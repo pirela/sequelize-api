@@ -7,9 +7,16 @@ import db from "../models";
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 
+/**
+ * Declaracion de los modelos a utilizar
+ */
 const Model = db.persona;
 const ModelTelefono = db.telefono;
 const ModelPais = db.pais;
+
+/**
+ * Declaracion de las rutas
+ */
 
 const apiRoutes = express.Router();
 
@@ -23,6 +30,14 @@ apiRoutes.get("/", (req, res) => {
   });
 });
 
+/**
+ * endpoint para la consulta de todas las personas con sus respectivos telefonos.
+ * Consulta para traer todas las personas
+ * excluyendo los valores en el parametro exclude,
+ * ordenados por createdAt de manera descendete
+ * asi como tambien traer el "JOIN" con los telefonos
+ * solo nos traemos el atributo telefono del modelo telefono
+ */
 apiRoutes.get("/persona-telefono", async (req, res) => {
   try {
     const personas = await Model.findAll({
@@ -40,7 +55,7 @@ apiRoutes.get("/persona-telefono", async (req, res) => {
     if (personas) {
       res.status(200).json({ data: personas });
     } else {
-      throw new Error("No se encontraron los usuario");
+      throw new Error("No se encontraron las personas");
     }
   } catch (e) {
     logger.error(e.message);
@@ -48,6 +63,14 @@ apiRoutes.get("/persona-telefono", async (req, res) => {
   }
 });
 
+/**
+ * endpoint para la consulta de todas las personas con su respectivo pais.
+ * Consulta para traer todas las personas
+ * excluyendo los valores en el parametro exclude,
+ * ordenados por createdAt de manera descendete
+ * asi como tambien traer el "JOIN" con el pais
+ * solo nos traemos el atributo nombre del modelo pais
+ */
 apiRoutes.get("/persona-pais", async (req, res) => {
   try {
     const personas = await Model.findAll({
@@ -59,13 +82,14 @@ apiRoutes.get("/persona-pais", async (req, res) => {
       include: [
         {
           model: ModelPais,
+          attributes: ["nombre"],
         },
       ],
     });
     if (personas) {
       res.status(200).json({ data: personas });
     } else {
-      throw new Error("No se encontraron los usuario");
+      throw new Error("No se encontraron las personas");
     }
   } catch (e) {
     logger.error(e.message);
@@ -73,6 +97,14 @@ apiRoutes.get("/persona-pais", async (req, res) => {
   }
 });
 
+/**
+ * endpoint para la consulta de todas las personas
+ * Consulta para traer todas las personas
+ * excluyendo los valores en el parametro exclude,
+ * ordenados por createdAt de manera descendete
+ * asi como tambien traer el "JOIN" con el pais y sus telefonos
+ * no excluimos ningun valor del pais ni de telefono
+ */
 apiRoutes.get("/persona-completa", async (req, res) => {
   try {
     const personas = await Model.findAll({
@@ -100,6 +132,13 @@ apiRoutes.get("/persona-completa", async (req, res) => {
   }
 });
 
+/**
+ * endpoint para la consulta de una(s) persona(s) segun parametros
+ * Consulta para traer personas segun parametros recibidos
+ * excluyendo los valores en el parametro exclude,
+ * ordenados por nombre de manera ascendete
+ * filtramos la busqueda con likes
+ */
 apiRoutes.get("/persona-like", async (req, res) => {
   try {
     const valueLike = "jose";
@@ -125,13 +164,16 @@ apiRoutes.get("/persona-like", async (req, res) => {
   }
 });
 
+/**
+ *En caso de no encontrar la ruta retornamos un 404 diciendo Oooops! 404
+ *en caso contrario continuamos con la ejecucion
+ */
 apiRoutes.use((req, res, next) => {
   if (!req.route) {
     return res.status(404).json({
       error: "Oooops! 404",
     });
   }
-
   next();
 });
 

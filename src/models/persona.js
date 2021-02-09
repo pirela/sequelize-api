@@ -1,3 +1,9 @@
+/**
+ *
+ * @param {*} sequelize
+ * @param {*} DataTypes
+ * Se define el modelo pais con la estructura que posee en la  base de datos
+ */
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define(
     "persona",

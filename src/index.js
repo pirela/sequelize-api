@@ -1,17 +1,18 @@
+//importaciones
 import express from "express";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 import config from "./config";
 import { logger } from "./utils";
 
+//Importaciones de rutas
 import apiRoutes from "./api/api";
-
 import publicRoutes from "./api/public";
-
-import bodyParser from "body-parser";
 
 const app = express();
 
+//implemetacion de cors, limite de transferencia
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(
@@ -22,6 +23,7 @@ app.use(
   })
 );
 
+//asignacion de rutas publicas y privadas
 app.use("/public", publicRoutes);
 app.use("/api/v1", apiRoutes);
 

@@ -1,6 +1,10 @@
 import bunyan from "bunyan";
 import uuid from "uuid/v4";
 
+/**
+ *
+ * @param isUpdate nos dice si es una insercion o actualizacion del registro
+ */
 export const defValues = (isUpdate) => {
   const date = new Date();
   return !isUpdate
