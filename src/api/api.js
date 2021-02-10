@@ -139,19 +139,47 @@ apiRoutes.get("/persona-completa", async (req, res) => {
  * ordenados por nombre de manera ascendete
  * filtramos la busqueda con likes
  */
-apiRoutes.get("/persona-like", async (req, res) => {
+apiRoutes.post("/persona-like", async (req, res) => {
   try {
-    const valueLike = "jose";
+    const data = req.body;
+    const where = {};
+    if (data.nombre) {
+      where.nombre = {
+        [Op.like]: `%${data.nombre}%`,
+      };
+    }
+    if (data.apellido) {
+      where.apellido = {
+        [Op.like]: `%${data.apellido}%`,
+      };
+    }
+    if (data.identificacion) {
+      where.identificacion = {
+        [Op.like]: `%${data.identificacion}%`,
+      };
+    }
+    if (data.email) {
+      where.email = {
+        [Op.like]: `%${data.email}%`,
+      };
+    }
+    if (data.genero) {
+      where.genero = {
+        [Op.like]: `%${data.genero}%`,
+      };
+    }
+
     const personas = await Model.findAll({
-      attributes: {
-        exclude: excludeDef(),
-      },
+      attributes: [
+        "id",
+        "identificacion",
+        "nombre",
+        "apellido",
+        "email",
+        "img",
+      ],
       order: [["nombre", "ASC"]],
-      where: {
-        nombre: {
-          [Op.like]: `%${valueLike}%`,
-        },
-      },
+      where,
     });
     if (personas) {
       res.status(200).json({ data: personas });
