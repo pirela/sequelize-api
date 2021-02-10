@@ -13,16 +13,24 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         primaryKey: true,
       },
+      identificacion: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+      },
       nombre: {
         type: DataTypes.STRING(255),
       },
       apellido: {
         type: DataTypes.STRING(255),
       },
-      email: {
+      clave: {
         type: DataTypes.STRING(255),
       },
-      clave: {
+      genero: {
         type: DataTypes.STRING(255),
       },
       idPais: {
