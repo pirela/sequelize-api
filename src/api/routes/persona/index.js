@@ -27,7 +27,7 @@ export const getPersonaLimit = () => async (req, res) => {
   try {
     const cantidad = Number.parseInt(req.params.cantidad);
     let objs = await Model.findAll({
-      order: [["createdAt", "DESC"]],
+      order: [["createdAt", "ASC"]],
       attributes: [
         "id",
         "identificacion",

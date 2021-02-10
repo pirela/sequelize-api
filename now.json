@@ -11,16 +11,5 @@
         },
         "src": "/.*",
         "dest": "src/index.js"
-    }],
-    "env": {
-      "NODE_ENV": "PRODUCTION",
-      "PORT": "4000",
-      "SECRET_API": "secret",
-      "DB_NAME": "dbName",
-      "DB_USERNAME": "user",
-      "DB_PASSWORD": "clave",
-      "DB_HOST": "000.000.00.00"
-    }
+    }]
   }
-
-
